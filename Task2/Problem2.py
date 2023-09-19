@@ -21,7 +21,7 @@ def create_matrix(n):
 
 def norma_1(arr):
     norma_str = max(list([np.sum(abs(arr), axis=0)][0]))
-    print(list([np.sum(abs(arr), axis=0)]))
+    #print(list([np.sum(abs(arr), axis=0)]))
     return norma_str
 
 def norma_2(arr):
@@ -37,7 +37,7 @@ def norma_3(arr):
 
 
 def main():
-
+    print("n = ")
     n = int(input())
 
     arr_n = [i for i in range(1, n + 1)]
