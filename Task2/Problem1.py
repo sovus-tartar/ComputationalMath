@@ -1,6 +1,7 @@
 import numpy as np
 import math 
 import matplotlib.pyplot as plt
+from scipy.misc import derivative
 
 def diff(f, x, n, delta):
     sum = 0
@@ -18,6 +19,7 @@ def accuracy_n(f, x, deltax, deltay):
     while (abs(u - f(x)) >=  deltay):
         n += 1
         u += diff(f, 0, n, deltax) * (x ** n) / (math.factorial(n))
+        #u += derivative(f, 0, deltax) * (x ** n) / (math.factorial(n))
     return n
 
 def mistake_graph(f, x, deltax):
@@ -26,13 +28,14 @@ def mistake_graph(f, x, deltax):
 
     mistakes = []
 
-    tries = 8
+    tries = 7
 
     arg_list = np.arange(1, tries + 1, 1)
     for i in range(tries):
-        n += 1
+        n+=1
         u += diff(f, 0, n, deltax) * (x ** n) / (math.factorial(n))
-        print("n =", n, "u =", u, "|u - u*| =", abs(u - f(x))) 
+        #u += derivative(f, 0, dx=deltax, n = i, order = 17) * (x ** i) / (math.factorial(i))
+        print("n =", i, "u =", u, "|u - u*| =", abs(u - f(x))) 
         mistakes.append(abs(f(x) - u))
 
     plt.plot(arg_list, mistakes)
