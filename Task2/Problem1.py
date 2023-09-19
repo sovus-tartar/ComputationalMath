@@ -57,5 +57,5 @@ def main():
     print(accuracy_n(np.sin, 0.5, 0.001, 0.001))
 
 
-
-main()
+if(__name__ == "__main__"):
+    main()
