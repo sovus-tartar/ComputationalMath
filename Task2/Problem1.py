@@ -18,14 +18,30 @@ def accuracy_n(f, x, deltax, deltay):
     while (abs(u - f(x)) >=  deltay):
         n += 1
         u += diff(f, 0, n, deltax) * (x ** n) / (math.factorial(n))
-        print("n =", n, "u =", u, "|u - u*| =", abs(u - f(x))) 
-
-    
-        
     return n
 
+def mistake_graph(f, x, deltax):
+    n = 0
+    u = f(0)
 
-            
+    mistakes = []
+
+    tries = 8
+
+    arg_list = np.arange(1, tries + 1, 1)
+    for i in range(tries):
+        n += 1
+        u += diff(f, 0, n, deltax) * (x ** n) / (math.factorial(n))
+        print("n =", n, "u =", u, "|u - u*| =", abs(u - f(x))) 
+        mistakes.append(abs(f(x) - u))
+
+    plt.plot(arg_list, mistakes)
+    plt.xlabel("number")
+    plt.ylabel("mistake")
+
+    plt.show()
+
+
 
 # Как я понимаю, delta - это "шаг сетки". 
 # Задача в том, чтобы найти такое n, чтобы при данном шаге сетки значение функции отличалось от эталона менее,
@@ -33,9 +49,9 @@ def accuracy_n(f, x, deltax, deltay):
 
 
 def main():
+
+    mistake_graph(np.sin, 0.5, 0.001)
     print(accuracy_n(np.sin, 0.5, 0.001, 0.001))
-
-
 
 
 
