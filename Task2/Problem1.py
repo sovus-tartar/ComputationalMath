@@ -7,7 +7,6 @@ def diff(f, x, n, delta):
     sum = 0
     for k in range(n + 1):
         sum += math.comb(n, k) * f(x + k * delta) * ((-1)**(k+1))
-
     sum = sum / (delta**n)
     return sum
 
@@ -41,7 +40,7 @@ def mistake_graph(f, x, deltax):
     plt.plot(arg_list, mistakes)
     plt.xlabel("number")
     plt.ylabel("mistake")
-
+    plt.semilogy()
     plt.show()
 
 
