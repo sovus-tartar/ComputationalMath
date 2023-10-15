@@ -1,17 +1,18 @@
 import numpy as np
 
 def is_pos_def(x):
+    print(np.linalg.eigvals(x))
     return np.all(np.linalg.eigvals(x) > 0)
 
 def generate_test1():
     A = np.zeros((6, 6))
-    for i in range(6, 6):
-        for j in range(6):
+    for i in range(len(A)):
+        for j in range(len(A)):
             A[i][j] = (10 / (i + j + 1))
-    f = [0] * 6
-    for i in range(6):
+    f = [0] * len(A)
+    for i in range(len(A)):
         sum = 0
-        for j in range(6):
+        for j in range(len(A)):
             sum += A[i][j]
         
         f[i] = sum
@@ -40,26 +41,26 @@ def L_Lt(A):
     L = make_zero_matrix(N)
 
     L[0][0] = np.sqrt(A[0][0])
-
-    for j in range(1, N):
-        L[j][0] = A[j][0] / L[0][0]
-
+    print(L)
     for i in range(1, N):
+        L[i][0] = A[i][0] / L[0][0]
+        print(L)
+        for j in range(1, i):
+            sum = 0
+            for k in range(0, j):
+                sum += L[i][k] * L[j][k]
+
+            L[i][j] = (1 / L[j][j]) * (A[i][j] - sum)
+            print(L)
+        
         sum = 0
-
-        for p in range(0, i):
+        for p in range(i):
             sum += L[i][p] ** 2
-        
-        L[i][i] = np.sqrt(A[i][i] - sum)
-        
-        if(i != N-1):
-            for j in range(i + 1, N):
-                sum = 0
 
-                for p in range(1, i):
-                    sum += L[i][p] * L[j][p]
-                
-                L[j][i] = (A[j][i] - sum) / L[i][i]
+        L[i][i] = np.sqrt(A[i][i] - sum)
+        print(L)
+
+    
 
     Lt = np.transpose(L)
 
@@ -107,26 +108,26 @@ def Kholetsky(A, N, f):
 
 def main():
    
-    N = int(input())
-    matrix = []
+    # N = int(input())
+    # matrix = []
 
-    for i in range(N):          
-        a =[]
-        for j in range(N):      
-            a.append(float(input()))
-        matrix.append(a)
+    # for i in range(N):          
+    #     a =[]
+    #     for j in range(N):      
+    #         a.append(float(input()))
+    #     matrix.append(a)
 
-    f = []
+    # f = []
 
-    for i in range(N):
-        f.append(float(input()))
+    # for i in range(N):
+    #     f.append(float(input()))
 
-    x = Kholetsky(matrix, N, f)
+    # x = Kholetsky(matrix, N, f)
 
-    print("Solve:")
-    print(x)
-    print("Norma:")
-    print(norma(x - np.linalg.solve(matrix, f)))
+    # print("Solve:")
+    # print(x)
+    # print("Norma:")
+    # print(norma(x - np.linalg.solve(matrix, f)))
 
     print("Test1 matrix:")
 
