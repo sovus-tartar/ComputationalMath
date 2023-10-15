@@ -1,5 +1,22 @@
 import numpy as np
 
+def is_pos_def(x):
+    return np.all(np.linalg.eigvals(x) > 0)
+
+def generate_test1():
+    A = np.zeros((6, 6))
+    for i in range(6, 6):
+        for j in range(6):
+            A[i][j] = (10 / (i + j + 1))
+    f = [0] * 6
+    for i in range(6):
+        sum = 0
+        for j in range(6):
+            sum += A[i][j]
+        
+        f[i] = sum
+    return A, f
+
 def norma(arr):
     sum = 0
     for i in range(len(arr)):
@@ -7,16 +24,18 @@ def norma(arr):
     return(np.sqrt(sum))
 
 def make_zero_matrix(N):
-    A = []
-
-    for i in range(N):
-        A.append([0 for j in range(N)])
-
+    A = np.zeros((N, N))
     return A
 
-def L_Lt(A, N):
+def L_Lt(A):
+    N = len(A)
+
     if not np.array_equal(A, np.transpose(A)):
         raise ValueError
+    
+    if not is_pos_def(A):
+        print("Warning: matrix A is not positively defined, Kholetsky transform is not possible")
+        exit()
     
     L = make_zero_matrix(N)
 
@@ -47,7 +66,8 @@ def L_Lt(A, N):
     return L, Lt
             
 
-def solve_lower_triangle(N, A, f):
+def solve_lower_triangle(A, f):
+    N = len(A)
     x = [0] * N
     for i in range(N):
         sum = 0
@@ -58,7 +78,8 @@ def solve_lower_triangle(N, A, f):
 
     return x
 
-def solve_higher_triangle(N, A, f):
+def solve_higher_triangle(A, f):
+    N = len(A)
     x = [0] * N
 
     for i in reversed(range(N)):
@@ -72,19 +93,20 @@ def solve_higher_triangle(N, A, f):
 
 def Kholetsky(A, N, f):
 
-    L, Lt = L_Lt(A, N)
+    L, Lt = L_Lt(A)
 
     print("Matrix L:")
     print(L)
 
-    v = solve_lower_triangle(N, L, f)
-    u = solve_higher_triangle(N, Lt, v)
-    
+    v = solve_lower_triangle(L, f)
+    u = solve_higher_triangle(Lt, v)
+
     return u
     
 
 
 def main():
+   
     N = int(input())
     matrix = []
 
@@ -105,6 +127,17 @@ def main():
     print(x)
     print("Norma:")
     print(norma(x - np.linalg.solve(matrix, f)))
+
+    print("Test1 matrix:")
+
+    A1, f1 = generate_test1()
+    x = Kholetsky(A1, 6, f1)
+    print("Solve:")
+    print(x)
+    print(np.linalg.solve(A1, f1))
+    print("Norma:")
+    print(norma(x - np.linalg.solve(A1, f1)))
+
 
 
     
