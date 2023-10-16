@@ -174,8 +174,5 @@ def main():
     print(norma(x - np.linalg.solve(A2, f2)))
 
 
-
-    
-
 if(__name__ == "__main__"):
     main()
