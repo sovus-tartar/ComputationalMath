@@ -1,7 +1,6 @@
 import numpy as np
 
-def is_pos_def(x):
-    return np.all(np.linalg.eigvals(x) > 0)
+
 
 def generate_test2():
     A = np.zeros((6, 6))
@@ -40,6 +39,9 @@ def generate_test1():
         
         f[i] = sum
     return A, f
+
+def is_pos_def(x):
+    return np.all(np.linalg.eigvals(x) > 0)
 
 def norma(arr):
     sum = 0
