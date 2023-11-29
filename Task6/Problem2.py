@@ -50,11 +50,9 @@ def main():
     x1 = 10000 # infinity
 
     f_4 = lambda x: diff(f, x, 4)
-    f_2 = lambda x: diff(f, x, 2)
     sup_f_4 = find_max(f_4, x0, x1)
-    sup_f_2 = find_max(f_2, )
 
-    h = ((10 ** -4) * 12 / (Sup_f * (x1 - x0))) ** (1/4)
+    h = ((10 ** -6) * 12 / (sup_f_4 * (x1 - x0))) ** (1/4)
     N = int((x1 - x0) / h) + 1
 
     print("h = ", h)
@@ -62,7 +60,5 @@ def main():
     
     print("Simpson method: I = ", simpson_method(f, N, x0, x1))
 
-    h = ((10 ** -4) * 12 / (Sup_f * (x1 - x0))) ** (1/4)
-    N = int((x1 - x0) / h) + 1
 
 main()
