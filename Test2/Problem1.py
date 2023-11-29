@@ -1,7 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import math
-def diff(f, x, n, delta = 0.001):
+def diff(f, x, n, delta = 0.0001):
     sum = 0
     for k in range(n + 1):
         sum += math.comb(n, k) * f(x + k * delta) * ((-1)**(k+1))
@@ -16,20 +16,27 @@ def create_plot(x, y):
     plt.grid()
     plt.show()
 
+def f(x):
+    return math.cos(x) + math.e ** x
+
 def main():
 
-    x = [-2.5, -2.17, -1.5, -1.17, -0.83, 2.5]
-    y = [-0.52, -0.71, -0.77, -0.61, -0.31, 11.13]
+    t = [i / 10 for i in range (-25, 26)]
+    y = [f(t[i]) for i in range(len(t))]
+    
+    temp = t
+    t = y
+    y = temp
 
     L = np.poly1d([0])
 
-    for i in range(len(x)):
+    for i in range(len(t)):
         numerator = np.poly1d([1])
         denominator = 1
-        for j in range(len(x)):
+        for j in range(len(t)):
             if(j != i):
-                numerator = np.polymul(numerator, [1, -x[j]])
-                denominator = denominator * (x[i] - x[j])
+                numerator = np.polymul(numerator, [1, -t[j]])
+                denominator = denominator * (t[i] - t[j])
         L_i = (numerator / denominator) * y[i]
 
         L = np.polyadd(L, L_i)
@@ -37,14 +44,12 @@ def main():
 
     print(L)
 
-    f = lambda x: np.polyval(L, x)
+    f_ = lambda x: np.polyval(L, x)
 
-
-    temp_t = [i / 100 for i in range(-52, 1113)]
+    temp_t = [i / 100 for i in range(-77, 1113)]
     temp_x = np.polyval(L, temp_t)
-    create_plot(temp_t, temp_x)
-
-    print("x = ", np.polyval(L, 0))
+    
+    print(f_(0))
 
     
 
