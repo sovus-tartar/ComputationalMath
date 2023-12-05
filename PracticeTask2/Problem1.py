@@ -92,21 +92,21 @@ def Newton_method(f, a, b, n):
 
 def main():
 # Lagrange part    
-    # plt.figure()
-    # plt.title("Lagrange comparison with original plot")
+    plt.figure()
+    plt.title("Lagrange comparison with original plot")
 
-    # temp_t = [i / 500 for i in range(-500, 501)]
-    # temp_x = [f(temp_t[i]) for i in range(len(temp_t))]
-    # plt.plot(temp_t, temp_x, label="Original")
+    temp_t = [i / 500 for i in range(-500, 501)]
+    temp_x = [f(temp_t[i]) for i in range(len(temp_t))]
+    plt.plot(temp_t, temp_x, label="Original")
 
-    # Lagrange_method(f, -1, 1, 4)
-    # Lagrange_method(f, -1, 1, 6)
-    # Lagrange_method(f, -1, 1, 6)
+    Lagrange_method(f, -1, 1, 4)
+    Lagrange_method(f, -1, 1, 6)
+    Lagrange_method(f, -1, 1, 6)
 
-    # plt.grid()
-    # plt.legend()
+    plt.grid()
+    plt.legend()
 
-    # plt.show()
+    plt.show()
 # Newton + Chebyshev part
     plt.figure()
     plt.title("Newton + Chebyshev comparison with original plot")
