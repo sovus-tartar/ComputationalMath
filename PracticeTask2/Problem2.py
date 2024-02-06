@@ -41,7 +41,8 @@ def newton(f, f_der, x0=0, eps=EPSILON, kmax=1000000):
     return x
 
 def change_coordinates(x):
-    return (x + 1) * 5
+    return (x + 1) * (10 / 2)
+
 
 def count_L_weight(L_zeros, x0, x1):
     c = []
@@ -56,8 +57,9 @@ def count_L_weight(L_zeros, x0, x1):
         temp_f = lambda x: np.polyval(temp, x)
         I = 5 * simpson_method(temp_f, [(i / 1000) for i in range(-1000, 1001)])
         # 5 is a constant which comes after changing variable
+        # dt = d(5(x+1)) = 5dx
         c.append(I)
-    print(c)
+    #print(c)
     return c
         
 
@@ -69,7 +71,7 @@ def integrate_(func, x0, x1, num_legandre_order):
     L_p = Legandre_poly(num_legandre_order)
     L_p_derivative = Legandre_poly_derivative(num_legandre_order)
 
-    print(L_p)
+    #print(L_p)
 
     for i in range(1, num_legandre_order + 1):
         temp_x0 = np.cos(np.pi * (4 * i - 1) / (4 * num_legandre_order + 2))

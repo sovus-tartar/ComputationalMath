@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import math
 import scipy.integrate as integrate
+from scipy.misc import derivative
+# TODO mistake
 
 def diff(f, x, n, delta = 0.001):
     sum = 0
@@ -25,7 +27,7 @@ def chebyshev_zeros(a, b, k, n):
 def Lagrange_method(func, a, b, n):
 
     t = [a + ((b - a) / (n - 1)) * i for i in range(n)]
-    print(t)
+    #print(t)
     y = [func(x) for x in t]
 
 
@@ -53,6 +55,8 @@ def Lagrange_method(func, a, b, n):
     name = "Lagrange interpolation for n = " + str(n)
     plt.plot(temp_t, temp_x, label = name)
 
+    print("Lagrange, ", "n = ", n, " Mistake = ", find_mistake(f,t, n))
+
 
 
 def Newton_method(f, a, b, n):
@@ -60,8 +64,8 @@ def Newton_method(f, a, b, n):
     t = [(a + b) / 2 + ((b - a) / 2) * np.cos(np.pi * (2 * k - 1) / (2 * n)) for k in range(1, n+1)]
     x = [f(xk) for xk in t]
 
-    print("t = ", t)
-    print("x = ", x)
+    #print("t = ", t)
+    #print("x = ", x)
     N = np.poly1d([x[0]])
 
     temp_poly = np.poly1d([1])
@@ -90,6 +94,43 @@ def Newton_method(f, a, b, n):
     name = "Newton+Chebyshev interpolation for n = " + str(n)
     plt.plot(temp_t, temp_x, label = name)
 
+    print("Newton+Chebyshev, ", "n = ", n, " Mistake = ", find_mistake(f, t, n))
+
+def make_omega_poly(x0 : list):
+    temp_list = np.poly1d([1])
+
+    for x in x0:
+        temp_list = np.polymul(temp_list, np.poly1d([1, -x]))
+        #print(temp_list)
+    
+    return lambda x: np.polyval(temp_list, x)
+
+def get_Rn(func, x0 : list, n_ : int):
+    
+    temp = 0
+    num_of_points = int(n_/2) * 2 + 1
+    f_x_der = lambda x: derivative(func, x, dx=0.001, n = n_ + 1, order=num_of_points+2)
+
+    for x in x0:
+        if abs(f_x_der(x)) > temp:
+            temp = abs(f_x_der(x))
+    
+    print(temp)
+
+    omega = make_omega_poly(x0)
+
+    return lambda x: omega(x) * temp / math.factorial(n_ + 1)
+    
+def find_mistake(func, x0 : list, n_ : int):
+    
+    Rn = get_Rn(func, x0, n_)    
+
+    x1 = [i/5000 for i in range(-5000, 5001)]
+
+    Rn_vals = [abs(Rn(x)) for x in x1]
+
+    return max(Rn_vals)
+
 def main():
 # Lagrange part    
     plt.figure()
@@ -99,14 +140,14 @@ def main():
     temp_x = [f(temp_t[i]) for i in range(len(temp_t))]
     plt.plot(temp_t, temp_x, label="Original")
 
-    Lagrange_method(f, -1, 1, 4)
-    Lagrange_method(f, -1, 1, 6)
-    Lagrange_method(f, -1, 1, 6)
+    for i in range(4, 8):
+        Lagrange_method(f, -1, 1, i)
+
 
     plt.grid()
     plt.legend()
 
-    plt.show()
+    #plt.show()
 # Newton + Chebyshev part
     plt.figure()
     plt.title("Newton + Chebyshev comparison with original plot")
@@ -114,15 +155,17 @@ def main():
     temp_x = [f(temp_t[i]) for i in range(len(temp_t))]
     plt.plot(temp_t, temp_x, label="Original")
 
-    Newton_method(f, -1, 1, 4)
-    Newton_method(f, -1, 1, 6)
-    Newton_method(f, -1, 1, 10)
-    Newton_method(f, -1, 1, 20)
+    for i in range(4, 8):
+        Newton_method(f, -1, 1, i)
+
+
 
     plt.grid()
     plt.legend()
 
-    plt.show()
+    #plt.show()
+
+    
 
 if(__name__ == '__main__'):
     main()
