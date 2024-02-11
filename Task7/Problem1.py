@@ -8,7 +8,7 @@ def f(t, u):
 
 def Euler_method(t0, t1, f, u0, h = 1e-3):
     u_list = [u0]
-    t_list = [t0 + i * h for i in range(int((t1-t0) / h))]
+    t_list = [t0 + i * h for i in range(int((t1 - t0) / h))]
 
     it_num = len(t_list)
 
@@ -60,9 +60,9 @@ def main():
     u0 = 1
 
     t_list1, u_list1 = Euler_method(t0, t1, f, u0)
-    #create_plot(t_list1, u_list1, "Euler method")
+    create_plot(t_list1, u_list1, "Euler method")
     t_list2, u_list2 = RungeKutta_method(t0, t1, f, u0)
-    #create_plot(t_list2, u_list2, "Runge-Kutta Method")
+    create_plot(t_list2, u_list2, "Runge-Kutta Method")
     
     u_list_diff = list_difference(u_list1, u_list2)
     create_plot(t_list1, u_list_diff, "Relative difference between methods")
