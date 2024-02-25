@@ -24,22 +24,28 @@ def create_plot(x, y, title = ''):
     plt.show()
 
 def main():
-    h = 1e-4
+    h = 1e-3
     t_list = np.arange(0, 10, h)
     y1_list = [2]
     y2_list = [2]
-
-    y1_list.append(h * (23 / 12) * f(t_list[0], y1_list[0], y2_list[0])) # u1 = h * 23/12 * f0
+    # u1 = h * 23/12 * f0
+    y1_list.append(h * (23 / 12) * f(t_list[0], y1_list[0], y2_list[0])) 
     y2_list.append(h * (23 / 12) * g(t_list[0], y1_list[0], y2_list[0]))
 
     # u2 = u0 + h * ((23/12) * f1 - 16/12 * f0)
-    y1_list.append(y1_list[0] + h * ((23 / 12) * f(t_list[1], y1_list[1], y2_list[1]) - (16/12) * f(t_list[0], y1_list[0], y2_list[0])))
-    y2_list.append(y2_list[0] + h * ((23 / 12) * g(t_list[1], y1_list[1], y2_list[1]) - (16/12) * g(t_list[0], y1_list[0], y2_list[0])))
+    y1_list.append(y1_list[0] + h * ((23 / 12) * f(t_list[1], y1_list[1], y2_list[1]) - \
+                                     (16/12) * f(t_list[0], y1_list[0], y2_list[0])))
+    y2_list.append(y2_list[0] + h * ((23 / 12) * g(t_list[1], y1_list[1], y2_list[1]) - \
+                                     (16/12) * g(t_list[0], y1_list[0], y2_list[0])))
 
     for i in range(3, len(t_list)):
         # u_i = u_(i-2) + h * (23/12 * f_(i-1) - 16/12 * f_(i-2) + 5/12 * f_(i - 3))
-        y1_list.append(y1_list[i - 2] + h * ((23/12) * f(t_list[i-1], y1_list[i-1], y2_list[i-1]) - (16/12) * f(t_list[i-2], y1_list[i-2], y2_list[i-2]) + (5/12) * f(t_list[i-3], y1_list[i-3], y2_list[i-3])))
-        y2_list.append(y2_list[i - 2] + h * ((23/12) * g(t_list[i-1], y1_list[i-1], y2_list[i-1]) - (16/12) * g(t_list[i-2], y1_list[i-2], y2_list[i-2]) + (5/12) * g(t_list[i-3], y1_list[i-3], y2_list[i-3])))
+        y1_list.append(y1_list[i - 2] + h * ((23/12) * f(t_list[i-1], y1_list[i-1], y2_list[i-1]) - \
+                                             (16/12) * f(t_list[i-2], y1_list[i-2], y2_list[i-2]) + \
+                                             (5/12) * f(t_list[i-3], y1_list[i-3], y2_list[i-3])))
+        y2_list.append(y2_list[i - 2] + h * ((23/12) * g(t_list[i-1], y1_list[i-1], y2_list[i-1]) - \
+                                             (16/12) * g(t_list[i-2], y1_list[i-2], y2_list[i-2]) + \
+                                             (5/12) * g(t_list[i-3], y1_list[i-3], y2_list[i-3])))
 
     create_plot(t_list, y1_list, 'y1(t)')
     create_plot(t_list, y2_list, 'y2(t)')

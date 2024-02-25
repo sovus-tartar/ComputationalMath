@@ -68,7 +68,7 @@ def count_kq_for_RK(f, g, t0, v0, u0, h = 1e-3):
     
     delta = 2 * h
     # simple_iteration
-    while(delta > h/2):
+    while(delta > h):
         #print(k, q)
 
         temp_k = [f(t0 + c[0] * h, v0 + h * (A[0][0] * k[0] + A[0][1] * k[1]), u0 + h * (A[0][0] * k[0] + A[0][1] * k[1])),
@@ -100,7 +100,7 @@ def Runge_Khutta(f, g, v0, u0, t0, t1, h = 1e-3):
 
 
 def main() :
-    #make_graph()
+    make_graph()
     Runge_Khutta(f, g, 1, 0, 0, 4 * np.pi, h = 1e-3)
 
 
