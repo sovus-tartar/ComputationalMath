@@ -36,11 +36,11 @@ def check_for_sustainability(R_list : list):
     
     print("Sustainable")
 
-def create_plot(x, y, title):
+def create_plot(x, y, title, x_label = 'x', y_label = 'y'):
     plt.figure(figsize = [12, 5])
     plt.plot(x, y)
-    plt.xlabel("t")
-    plt.ylabel("u")
+    plt.xlabel(x_label)
+    plt.ylabel(y_label)
     plt.title(title)
     plt.grid()
     plt.show()
@@ -51,12 +51,16 @@ def main():
     t1 = 0.55
 
     t_list, u_list = Explicit_method(f, u0, t0, t1, 1e-6)
-    create_plot(t_list, u_list, 'u(t)')
+    create_plot(t_list, u_list, 'u(t)', 't', 'u')
 
     
 
     R_list = count_R(u_list)
     check_for_sustainability(R_list)
+    
+    n_list = [n for n in range(len(R_list))]
+    create_plot(n_list, R_list, 'R(n)', 'n', 'R')
+    
     #print(R_list)
     
 
