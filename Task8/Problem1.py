@@ -61,27 +61,28 @@ def make_graph():
     plt.show()
 
 def count_kq_for_RK(f, g, t0, v0, u0, h = 1e-3):
-    k = [f(t0 + c[0] * h, v0, u0),
-         f(t0 + c[1] * h, v0 + h * f(t0 + c[0] * h, v0, u0), u0 + h * f(t0 + c[0] * h, v0, u0))]
-    q = [g(t0 + c[0] * h, v0, u0),
-         g(t0 + c[1] * h, v0 + h * g(t0 + c[0] * h, v0, u0), u0 + h * g(t0 + c[0] * h, v0, u0))]
-    
+    k = [f(t0 + c[0] * h, v0, u0)]
+    q = [g(t0 + c[0] * h, v0, u0)]
+
+    k.append(f(t0 + c[1] * h, v0 + A[1][0] * k[0], u0 + A[1][0] * q[0]))
+    q.append(g(t0 + c[1] * h, v0 + A[1][0] * k[0], u0 + A[1][0] * q[0]))
+
     delta = 2 * h
     # simple_iteration
     while(delta > h):
         #print(k, q)
 
-        temp_k = [f(t0 + c[0] * h, v0 + h * (A[0][0] * k[0] + A[0][1] * k[1]), u0 + h * (A[0][0] * k[0] + A[0][1] * k[1])),
-                  f(t0 + c[1] * h, v0 + h * (A[1][0] * k[0] + A[1][1] * k[1]), u0 + h * (A[1][0] * k[0] + A[1][1] * k[1]))]
-        temp_q = [g(t0 + c[0] * h, v0 + h * (A[0][0] * k[0] + A[0][1] * k[1]), u0 + h * (A[0][0] * k[0] + A[0][1] * k[1])),
-                  g(t0 + c[1] * h, v0 + h * (A[1][0] * k[0] + A[1][1] * k[1]), u0 + h * (A[1][0] * k[0] + A[1][1] * k[1]))]
+        temp_k = [f(t0 + c[0] * h, v0 + h * (A[0][0] * k[0] + A[0][1] * k[1]), u0 + h * (A[0][0] * q[0] + A[0][1] * q[1])),
+                  f(t0 + c[1] * h, v0 + h * (A[1][0] * k[0] + A[1][1] * k[1]), u0 + h * (A[1][0] * q[0] + A[1][1] * q[1]))]
+        temp_q = [g(t0 + c[0] * h, v0 + h * (A[0][0] * k[0] + A[0][1] * k[1]), u0 + h * (A[0][0] * q[0] + A[0][1] * q[1])),
+                  g(t0 + c[1] * h, v0 + h * (A[1][0] * k[0] + A[1][1] * k[1]), u0 + h * (A[1][0] * q[0] + A[1][1] * q[1]))]
         
         delta = max(abs(k[0] - temp_k[0]), abs(k[1] - temp_k[1]), abs(q[0] - temp_q[0]), abs(q[1] - temp_q[1]))
 
         k = temp_k
         q = temp_q
         
-
+    print (k, q)
     return k, q
 
 def Runge_Khutta(f, g, v0, u0, t0, t1, h = 1e-3):
@@ -101,7 +102,7 @@ def Runge_Khutta(f, g, v0, u0, t0, t1, h = 1e-3):
 
 def main() :
     make_graph()
-    Runge_Khutta(f, g, 1, 0, 0, 4 * np.pi, h = 1e-3)
+    Runge_Khutta(f, g, 0, 1, 0, 4 * np.pi, h = 1e-3)
 
 
 

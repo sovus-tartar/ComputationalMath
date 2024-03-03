@@ -1,8 +1,8 @@
 import math
 import numpy as np 
 import matplotlib.pyplot as plt
-import pylab
-from mpl_toolkits.mplot3d import Axes3D
+# import pylab
+# from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 
 # dy1/dt = y1 - y1 * y2
@@ -10,7 +10,7 @@ from matplotlib import cm
 # y1(0) = 2, y2(0) = 2
 
 def f(t, y1, y2):
-    return y1 - y2 * y2
+    return y1 - y1 * y2
 def g(t, y1, y2):
     return -y2 + y1 * y2
 
@@ -24,7 +24,7 @@ def create_plot(x, y, title = ''):
     plt.show()
 
 def main():
-    h = 1e-3
+    h = 1e-7
     t_list = np.arange(0, 10, h)
     y1_list = [2]
     y2_list = [2]
