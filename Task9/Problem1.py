@@ -5,7 +5,7 @@ import pylab
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib import cm
 
-# Rhado method
+# # Rhado method
 
 # A = [[88 - 7 * np.sqrt(6), (296 - 169 * np.sqrt(6)) / 1800, (-2 + 3 * np.sqrt(6)) / 225], \
 #      [(296 + 169 * np.sqrt(6)) / 1800, (88 + 7 * np.sqrt(6)) / 360, (-2 - 3 * np.sqrt(6)) / 225], \
@@ -35,19 +35,6 @@ def create_plot(x, y, title = ''):
     plt.grid()
     plt.show()
 
-# def f(t, x, y, a):
-#     return 1 - 0.5 * x - (2 * y)/(7 * a**2)
-# def g(t, x, y, a):
-#     return 2 * a - 3.5 * a**2 * x - 0.5 * y
-# def p(t, x, y, a):
-#     return (2 - 7 * a * x)/100
-
-#        return np.array([1 - 0.5 * x - (2 * y)/(7 * a**2), 
-                        #  2 * a - 3.5 * a**2 * x - 0.5 * y,
-                        #  (2 - 7 * a * x)/100]) 
-#
-#
-#
 def f(t, x, y, alpha):
     #print('t = ', t, 'x = ', x, 'y = ', y, 'alpha = ', alpha, 'f = ', x * (1 - 0.5 * x - (2 / (7 * alpha ** 2)) * y))
     return x * (1 - 0.5 * x - (2 / (7 * (alpha ** 2))) * y)
@@ -149,7 +136,7 @@ def Runge_Khutta(f, g, p, v0, u0, p0, t0, t1, h = 1e-3):
         p_list.append(p_list[i] + h * (b[0] * r[0] + b[1] * r[1] + b[2] * r[2]))
         # print('t = ', t_list[i])
 
-    print(v_list)
+    # print(v_list)
 
     create_plot(t_list, v_list)
     create_plot(t_list, u_list)
@@ -157,8 +144,8 @@ def Runge_Khutta(f, g, p, v0, u0, p0, t0, t1, h = 1e-3):
 
 
 def main() :
-    # make_graph()
-    Runge_Khutta(f, g, p, 1.5, 10, 0.1, 0, 0.02, h = 1e-6)
+    make_graph()
+    # Runge_Khutta(f, g, p, 1.5, 10, 0.1, 0, 0.04, h = 1e-6)
 
 
 
