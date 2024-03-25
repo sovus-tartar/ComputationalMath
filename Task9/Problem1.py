@@ -14,17 +14,20 @@ from matplotlib import cm
 # b = [(16 - np.sqrt(6)) / 10, (16 + np.sqrt(6)) / 10, 1 / 9]
 # e = [1, 1, 1]
 
-# e = [1, 1, 1]
-# c = [1 / 2 - np.sqrt(15) / 10, 1 / 2, 1 / 2 + np.sqrt(15)]
-# b = [5 / 18, 4 / 9, 5 / 18]
-# A = [[5 / 36, 2 / 9 - np.sqrt(15)/15, 5 / 36 - np.sqrt(15) / 30],
-#      [5 / 36 + np.sqrt(15) / 30, 2 / 9, 5 / 36 - np.sqrt(15) / 24],
-#      [5 / 36 + np.sqrt(15) / 30, 2 / 9 + np.sqrt(15) / 15, 5 / 36]]
-
-A = [[1/2 - np.sqrt(3) / 6, 0, 0], [np.sqrt(3) / 3, - 1 / 2 - np.sqrt(3) / 2, 0], [0, 0, 0]]
-c = [1 / 2 - np.sqrt(3) / 6, - 1 / 2 - np.sqrt(3) / 6, 0]
-b = [1 + np.sqrt(3) / 6, - np.sqrt(3) / 6, 0]
 e = [1, 1, 1]
+c = [1 / 2 - np.sqrt(15) / 10, 1 / 2, 1 / 2 + np.sqrt(15)]
+b = [5 / 18, 4 / 9, 5 / 18]
+A = [[5 / 36, 2 / 9 - np.sqrt(15)/15, 5 / 36 - np.sqrt(15) / 30],
+     [5 / 36 + np.sqrt(15) / 30, 2 / 9, 5 / 36 - np.sqrt(15) / 24],
+     [5 / 36 + np.sqrt(15) / 30, 2 / 9 + np.sqrt(15) / 15, 5 / 36]]
+
+# A = [[1/2 - np.sqrt(3) / 6, 0, 0], [np.sqrt(3) / 3, - 1 / 2 - np.sqrt(3) / 2, 0], [0, 0, 0]]
+# c = [1 / 2 - np.sqrt(3) / 6, - 1 / 2 - np.sqrt(3) / 6, 0]
+# b = [1 + np.sqrt(3) / 6, - np.sqrt(3) / 6, 0]
+# e = [1, 1, 1]
+
+
+
 
 def create_plot(x, y, title = ''):
     plt.figure(figsize = [12, 5])
@@ -144,8 +147,8 @@ def Runge_Khutta(f, g, p, v0, u0, p0, t0, t1, h = 1e-3):
 
 
 def main() :
-    make_graph()
-    # Runge_Khutta(f, g, p, 1.5, 10, 0.1, 0, 0.04, h = 1e-6)
+    #make_graph()
+    Runge_Khutta(f, g, p, 1.5, 10, 0.1, 0, 0.04, h = 1e-3)
 
 
 
